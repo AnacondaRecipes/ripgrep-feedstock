@@ -13,10 +13,6 @@ build:
   number: 1
   script:
     - set RUST_BACKTRACE=1  # [win]
-    # PKG-2224: CVE-2022-24713 impacted regex<1.5.5
-    # the next line can be removed on the next version
-    - cargo update -p regex
-    - cargo clean
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
