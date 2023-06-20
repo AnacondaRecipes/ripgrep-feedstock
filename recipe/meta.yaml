@@ -10,9 +10,12 @@ source:
   sha256: 0fb17aaf285b3eee8ddab17b833af1e190d73de317ff9648751ab0660d763ed2
 
 build:
-  number: 0
+  number: 1
   script:
     - set RUST_BACKTRACE=1  # [win]
+    # PKG-2224: CVE-2022-24713 impacted regex<1.5.5
+    # the next line can be removed on the next version
+    - cargo update -p regex --precise 1.8.4
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
