@@ -14,8 +14,7 @@ build:
   script:
     - set RUST_BACKTRACE=1  # [win]
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-    # # build statically linked binary with Rust, see https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#building
-    - cargo install --locked --features pcre2 --root "$PREFIX" --path .
+    - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
     - mkdir %PREFIX%\Library\mingw-w64\bin  # [win]
