@@ -1,4 +1,4 @@
-{% set version = '13.0.0' %}
+{% set version = '14.1.0' %}
 {% set name = 'ripgrep' %}
 
 package:
@@ -7,15 +7,13 @@ package:
 
 source:
   url: https://github.com/BurntSushi/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 0fb17aaf285b3eee8ddab17b833af1e190d73de317ff9648751ab0660d763ed2
+  sha256: 33c6169596a6bbfdc81415910008f26e0809422fda2d849562637996553b2ab6
 
 build:
-  number: 2
+  number: 0
   script:
     - set RUST_BACKTRACE=1  # [win]
-    # PKG-2224: CVE-2022-24713 impacted regex<1.5.5
-    # the next line can be removed on the next version
-    - cargo update -p regex --precise 1.8.4
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
@@ -29,6 +27,7 @@ requirements:
   build:
     - {{ compiler('rust') }}  # [not win]
     - {{ compiler('rust-gnu') }}  # [win]
+    - cargo-bundle-licenses
 
 test:
   commands:
@@ -39,9 +38,9 @@ about:
   dev_url: https://github.com/BurntSushi/ripgrep
   doc_url: https://github.com/BurntSushi/ripgrep
   summary: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
-  description: |    
+  description: |
     ripgrep is a line-oriented search tool that recursively searches the current directory for a regex pattern.
   license: MIT AND Unlicense
   license_family: Other
-  license_file: 
+  license_file:
     - LICENSE-MIT
