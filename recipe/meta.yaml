@@ -1,4 +1,4 @@
-{% set version = '14.1.0' %}
+{% set version = '15.1.0' %}
 {% set name = 'ripgrep' %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/BurntSushi/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 33c6169596a6bbfdc81415910008f26e0809422fda2d849562637996553b2ab6
+  sha256: 046fa01a216793b8bd2750f9d68d4ad43986eb9c0d6122600f993906012972e8
 
 build:
   number: 0
@@ -20,8 +20,6 @@ build:
     - mkdir %PREFIX%\Library\mingw-w64\bin  # [win]
     - cp target/release/rg $PREFIX/bin/rg  # [not win]
     - copy target\release\rg.exe %PREFIX%\Library\mingw-w64\bin\rg.exe  # [win]
-  missing_dso_whitelist:
-    - $RPATH/ld64.so.1  # [s390x]
 
 requirements:
   build:
