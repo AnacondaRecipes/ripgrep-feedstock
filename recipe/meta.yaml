@@ -17,14 +17,13 @@ build:
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
-    - mkdir %PREFIX%\Library\mingw-w64\bin  # [win]
+    - mkdir %PREFIX%\Library\bin  # [win]
     - cp target/release/rg $PREFIX/bin/rg  # [not win]
-    - copy target\release\rg.exe %PREFIX%\Library\mingw-w64\bin\rg.exe  # [win]
+    - copy target\release\rg.exe %PREFIX%\Library\bin\rg.exe  # [win]
 
 requirements:
   build:
-    - {{ compiler('rust') }}  # [not win]
-    - {{ compiler('rust-gnu') }}  # [win]
+    - {{ compiler('rust') }}
     - cargo-bundle-licenses
 
 test:
