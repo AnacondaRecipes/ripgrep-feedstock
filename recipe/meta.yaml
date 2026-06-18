@@ -10,7 +10,7 @@ source:
   sha256: 046fa01a216793b8bd2750f9d68d4ad43986eb9c0d6122600f993906012972e8
 
 build:
-  number: 0
+  number: 1
   script:
     - set RUST_BACKTRACE=1  # [win]
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
