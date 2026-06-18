@@ -23,6 +23,9 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
+    # Needed for run_export of libgcc
+    - {{ compiler('c') }}  # [linux]
     - {{ compiler('rust') }}
     - cargo-bundle-licenses
 
