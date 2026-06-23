@@ -10,21 +10,23 @@ source:
   sha256: 046fa01a216793b8bd2750f9d68d4ad43986eb9c0d6122600f993906012972e8
 
 build:
-  number: 0
+  number: 1
   script:
     - set RUST_BACKTRACE=1  # [win]
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
-    - mkdir %PREFIX%\Library\mingw-w64\bin  # [win]
+    - mkdir %PREFIX%\Library\bin  # [win]
     - cp target/release/rg $PREFIX/bin/rg  # [not win]
-    - copy target\release\rg.exe %PREFIX%\Library\mingw-w64\bin\rg.exe  # [win]
+    - copy target\release\rg.exe %PREFIX%\Library\bin\rg.exe  # [win]
 
 requirements:
   build:
-    - {{ compiler('rust') }}  # [not win]
-    - {{ compiler('rust-gnu') }}  # [win]
+    - {{ stdlib('c') }}
+    # Needed for run_export of libgcc
+    - {{ compiler('c') }}  # [linux]
+    - {{ compiler('rust') }}
     - cargo-bundle-licenses
 
 test:
