@@ -10,7 +10,7 @@ source:
   sha256: 0fb17aaf285b3eee8ddab17b833af1e190d73de317ff9648751ab0660d763ed2
 
 build:
-  number: 2
+  number: 3
   script:
     - set RUST_BACKTRACE=1  # [win]
     # PKG-2224: CVE-2022-24713 impacted regex<1.5.5
@@ -19,16 +19,16 @@ build:
     - cargo build --release -v
     - $STRIP target/release/rg  # [not win]
     - mkdir $PREFIX/bin  # [not win]
-    - mkdir %PREFIX%\Library\mingw-w64\bin  # [win]
+    - mkdir %PREFIX%\Library\bin  # [win]
     - cp target/release/rg $PREFIX/bin/rg  # [not win]
-    - copy target\release\rg.exe %PREFIX%\Library\mingw-w64\bin\rg.exe  # [win]
-  missing_dso_whitelist:
-    - $RPATH/ld64.so.1  # [s390x]
+    - copy target\release\rg.exe %PREFIX%\Library\bin\rg.exe  # [win]
 
 requirements:
   build:
-    - {{ compiler('rust') }}  # [not win]
-    - {{ compiler('rust-gnu') }}  # [win]
+    - {{ stdlib('c') }}
+    # Needed for run_export of libgcc
+    - {{ compiler('c') }}  # [linux]
+    - {{ compiler('rust') }}
 
 test:
   commands:
